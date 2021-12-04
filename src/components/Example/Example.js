@@ -35,7 +35,8 @@ const Phone = ({currentDevice}) => {
 
     const group = React.useRef() 
   
-    // const envMap = useLoader(RGBELoader, '/3DModels/EnvMaps/photo_studio_01_1k.hdr')
+    // const envMap = useLoader(RGBELoader, '/3DModels/EnvMaps/photo_studio_01_4k.hdr')
+    const envMap = useLoader(RGBELoader, '/3DModels/EnvMaps/2photo_studio_01_1k.hdr')
     const result = useLoader(GLTFLoader, '/3DModels/Phones/iphone_12/scene.gltf')
     const { nodes, materials } = result
   
@@ -47,13 +48,13 @@ const Phone = ({currentDevice}) => {
     React.useEffect(() => {
       const pmremGenerator = new THREE.PMREMGenerator( gl );
       pmremGenerator.compileEquirectangularShader()
-      // let envTexture =  pmremGenerator.fromEquirectangular( envMap );
+      let envTexture =  pmremGenerator.fromEquirectangular( envMap );
   
       let newMaterials = {}
       var blackColor = new THREE.Color("rgb(0, 0, 0)").convertSRGBToLinear();
       Object.keys(materials).forEach(item => {
         newMaterials[item] = materials[item].clone()
-        // newMaterials[item].envMap = envTexture.texture
+        newMaterials[item].envMap = envTexture.texture
         newMaterials[item].envMapIntensity = 1
       })
       
